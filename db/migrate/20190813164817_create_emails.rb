@@ -4,7 +4,7 @@ class CreateEmails < ActiveRecord::Migration[5.2]
       t.belongs_to :user, foreign_key: true
       t.string :subject, null: false
       t.text :body, null: false
-      t.boolean :read, null: false
+      t.boolean :read, default: false, null: false
 
       t.timestamps
     end
