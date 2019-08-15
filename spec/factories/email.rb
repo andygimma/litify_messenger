@@ -3,6 +3,6 @@ FactoryBot.define do
     user_id { FactoryBot.create(:user).id }
     subject { Faker::Company.name  }
     body { Faker::Company.catch_phrase }
-    read { false }
+    read { Faker::Boolean.boolean }
   end
 end
