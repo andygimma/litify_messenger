@@ -45,12 +45,13 @@ class EmailsController < ApplicationController
       params.require(:email).permit(:subject, :body, :users)
     end
 
-    def user_ids_from_params(params)
+    def user_ids_from_params(params, current_user)
+      params["email"]["users"].push(current_user.id.to_s)
       params["email"]["users"].reject { |u| u.empty? }
     end
 
     def create_thread_and_email(email_params, current_user, params)
-      user_ids = user_ids_from_params(params)
+      user_ids = user_ids_from_params(params, current_user)
       ActiveRecord::Base.transaction do
         @message_thread = MessageThread.new
         @message_thread.user = current_user
