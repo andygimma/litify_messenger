@@ -77,12 +77,16 @@ class EmailsController < ApplicationController
         @message_thread = MessageThread.new
         @message_thread.user = current_user
         @message_thread.save
+
         @email = Email.new(email_params)
         @email.user = current_user
         @email.message_thread = @message_thread
         @email.save
+        
+        if @email.valid? == false
+          raise ActiveRecord::Rollback
+        end
       end
-      @email
-      false
+      @email.valid?
     end
 end
