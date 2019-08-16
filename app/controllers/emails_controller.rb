@@ -16,7 +16,7 @@ class EmailsController < ApplicationController
   # GET /emails/new
   def new
     @email = Email.new
-    @users = User.all.select(:id, :email)
+    @users = User.all_except(current_user).select(:id, :email)
   end
 
   # GET /emails/1/edit
