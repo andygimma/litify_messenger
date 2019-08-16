@@ -16,6 +16,7 @@ class EmailsController < ApplicationController
   # GET /emails/new
   def new
     @email = Email.new
+    @users = User.all
   end
 
   # GET /emails/1/edit
@@ -25,6 +26,7 @@ class EmailsController < ApplicationController
   # POST /emails
   # POST /emails.json
   def create
+    binding.pry
     respond_to do |format|
       if create_thread_and_email(email_params, current_user)
         format.html { redirect_to @email, notice: 'Email was successfully created.' }
@@ -69,7 +71,7 @@ class EmailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_params
-      params.require(:email).permit(:subject, :body)
+      params.require(:email).permit(:subject, :body, :users)
     end
 
     def create_thread_and_email(email_params, current_user)

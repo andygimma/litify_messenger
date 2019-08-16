@@ -12,6 +12,13 @@
   <% end %>
 
   <div class="field">
+    <%= form.label "Send to:" %>
+    <%= form.select(:users, @users.collect {|p| [ p.email, p.id ] }, 
+                                           { :prompt => "Please select"}, 
+                                           { :multiple => true }) %>
+    </div>
+  
+  <div class="field">
     <%= form.label :subject %>
     <%= form.text_field :subject %>
   </div>
