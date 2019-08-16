@@ -6,6 +6,6 @@ class DashboardController < ApplicationController
                   MessageThreadUser
                     .where(user_id: current_user.id)
                     .pluck(:message_thread_id)
-              )
+              ).paginate(page: params[:page], per_page: 1)
   end
 end
