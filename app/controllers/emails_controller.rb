@@ -25,13 +25,12 @@ class EmailsController < ApplicationController
   # POST /emails
   # POST /emails.json
   def create
-    @email = Email.new(email_params)
-    @email.user = current_user
     respond_to do |format|
-      if @email.save
+      if create_thread_and_email(email_params, current_user)
         format.html { redirect_to @email, notice: 'Email was successfully created.' }
         format.json { render :show, status: :created, location: @email }
       else
+        # TODO remove Thread from errors
         format.html { render :new }
         format.json { render json: @email.errors, status: :unprocessable_entity }
       end
@@ -71,5 +70,19 @@ class EmailsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_params
       params.require(:email).permit(:subject, :body)
+    end
+
+    def create_thread_and_email(email_params, current_user)
+      ActiveRecord::Base.transaction do
+        @message_thread = MessageThread.new
+        @message_thread.user = current_user
+        @message_thread.save
+        @email = Email.new(email_params)
+        @email.user = current_user
+        @email.message_thread = @message_thread
+        @email.save
+      end
+      @email
+      false
     end
 end
