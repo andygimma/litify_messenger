@@ -5,7 +5,7 @@ This is an example repository for working with rails and postgres, and setting t
 To run this app, do the following. 
 
 1. Install docker
-1. Run `docker-compose up`
+1. Run `docker-compose up -d && docker attach $(docker-compose ps -q web)`
 2. This would run the web service in a container and postgres in a container. 
 3. Would look something like this.
 ![alt text](blog_images/docker_compose.png)
