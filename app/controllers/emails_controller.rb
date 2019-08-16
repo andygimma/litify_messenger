@@ -26,7 +26,6 @@ class EmailsController < ApplicationController
   # POST /emails
   # POST /emails.json
   def create
-    binding.pry
     respond_to do |format|
       if create_thread_and_email(email_params, current_user)
         format.html { redirect_to @email, notice: 'Email was successfully created.' }

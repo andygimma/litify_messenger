@@ -30,9 +30,7 @@ ActiveRecord::Schema.define(version: 2019_08_16_113510) do
   create_table "message_thread_users", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "message_thread_id"
-    t.bigint "sent_by_user_id"
     t.index ["message_thread_id"], name: "index_message_thread_users_on_message_thread_id"
-    t.index ["sent_by_user_id"], name: "index_message_thread_users_on_sent_by_user_id"
     t.index ["user_id"], name: "index_message_thread_users_on_user_id"
   end
 
@@ -56,6 +54,5 @@ ActiveRecord::Schema.define(version: 2019_08_16_113510) do
   add_foreign_key "emails", "users"
   add_foreign_key "message_thread_users", "message_threads"
   add_foreign_key "message_thread_users", "users"
-  add_foreign_key "message_thread_users", "users", column: "sent_by_user_id"
   add_foreign_key "message_threads", "users"
 end
