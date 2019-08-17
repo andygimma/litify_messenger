@@ -13,7 +13,7 @@ RSpec.feature "Email" do
     fill_in 'email_body', with: body
 
     click_on 'Create Email'
-    visit emails_path
+    visit root_path
     expect(page).to have_content subject
   end
 end

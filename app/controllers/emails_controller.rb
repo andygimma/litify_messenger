@@ -1,16 +1,10 @@
 class EmailsController < ApplicationController
-  before_action :set_email, only: [:show]
   before_action :require_login
-
-  # GET /emails
-  # GET /emails.json
-  def index
-    @emails = Email.all
-  end
 
   # GET /emails/1
   # GET /emails/1.json
   def show
+    @email = Email.find(params[:id])
   end
 
   # GET /emails/new
@@ -35,12 +29,6 @@ class EmailsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_email
-      @email = Email.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
     def email_params
       params.require(:email).permit(:subject, :body, :users)
     end
