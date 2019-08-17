@@ -1,4 +1,6 @@
 class DashboardController < ApplicationController
+  before_action :require_login
+
   def home
     # @my_message_thread_users = MessageThreadUser.where(user_id: current_user.id).threads.emails
     @emails = Email
