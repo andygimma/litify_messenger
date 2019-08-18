@@ -13,17 +13,17 @@
   </thead>
 
   <tbody>
-    <% @emails.each do |email| %>
+    <% @threads.each do |thread| %>
       <tr>
-        <td><%= email.subject %></td>
-        <td><%= email.body %></td>
-        <td><%= link_to 'Show', email %></td>
+        <td><%= thread.emails.first.subject %></td>
+        <td><%= thread.emails.first.body %></td>
+        <td><%= link_to 'Show', thread.emails.first %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <br>
-<%= will_paginate @emails %>
+<%= will_paginate @threads %>
 <br>
 
 <%= link_to 'New Email', new_email_path %>
