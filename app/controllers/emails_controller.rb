@@ -60,6 +60,7 @@ class EmailsController < ApplicationController
     def create_thread_and_email(email_params, current_user, params)
       user_ids = user_ids_from_params(params, current_user)
       ActiveRecord::Base.transaction do
+        # TODO make each of these blocks a function
         @message_thread_id = nil
         if params["email"]["message_thread_id"] != ""
           @message_thread_id = params["email"]["message_thread_id"].to_i
