@@ -1,5 +1,6 @@
 class EmailsController < ApplicationController
   before_action :require_login
+  # before_action :require_reply_permission, only: [:new_reply]
 
   # GET /emails/1
   # GET /emails/1.json
@@ -9,6 +10,13 @@ class EmailsController < ApplicationController
 
   # GET /emails/new
   def new
+    @email = Email.new
+    @users = User.all_except(current_user).select(:id, :email)
+  end
+
+  def new_reply
+    # ensure that we can add to this thread
+    @message_thread_id = Email.find(params[:id]).message_thread_id
     @email = Email.new
     @users = User.all_except(current_user).select(:id, :email)
   end
@@ -30,13 +38,23 @@ class EmailsController < ApplicationController
 
   private
     def email_params
-      params.require(:email).permit(:subject, :body, :users)
+      params.require(:email).permit(:subject, :body)
     end
 
     def user_ids_from_params(params, current_user)
       params["email"]["users"].push(current_user.id.to_s)
       params["email"]["users"].reject { |u| u.empty? }
     end
+
+    # def require_reply_permission
+    #   user_id = current_user.id
+    #   message_thread_id = Email.find(params[:id]).message_thread_id
+    #   MessageThreadUser
+    #     .where(
+    #       user_id: user_id,
+    #       message_thread_id: message_thread_id)
+    #     .count > 0
+    # end
 
     def create_thread_and_email(email_params, current_user, params)
       user_ids = user_ids_from_params(params, current_user)

@@ -28,6 +28,7 @@
     <%= form.text_area :body %>
   </div>
 
+  <%= hidden_field_tag :"email[message_thread_id]", @message_thread_id %>
   <div class="actions">
     <%= form.submit %>
   </div>
