@@ -18,6 +18,7 @@ class EmailsController < ApplicationController
     # ensure that we can add to this thread
     @message_thread_id = Email.find(params[:id]).message_thread_id
     @email = Email.new
+    @sent_users = MessageThreadUser.where(message_thread_id: @message_thread_id).pluck(:user_id)
     @users = User.all_except(current_user).select(:id, :email)
   end
 
@@ -29,7 +30,7 @@ class EmailsController < ApplicationController
         format.html { redirect_to @email, notice: 'Email was successfully created.' }
         format.json { render :show, status: :created, location: @email }
       else
-        # TODO remove Thread from errors
+        @users = User.all_except(current_user).select(:id, :email)
         format.html { render :new }
         format.json { render json: @email.errors, status: :unprocessable_entity }
       end
@@ -59,20 +60,26 @@ class EmailsController < ApplicationController
     def create_thread_and_email(email_params, current_user, params)
       user_ids = user_ids_from_params(params, current_user)
       ActiveRecord::Base.transaction do
-        @message_thread = MessageThread.new
-        @message_thread.user = current_user
-        @message_thread.save
+        @message_thread_id = nil
+        if params["email"]["message_thread_id"] != ""
+          @message_thread_id = params["email"]["message_thread_id"].to_i
+        else
+          @message_thread = MessageThread.new
+          @message_thread.user = current_user
+          @message_thread.save
+          @message_thread_id = @message_thread.id
+        end
 
         user_ids.each do |user_id|
-          @message_thread_user = MessageThreadUser.new(user_id: user_id, message_thread_id: @message_thread.id)
+          @message_thread_user = MessageThreadUser.new(user_id: user_id, message_thread_id: @message_thread_id)
           @message_thread_user.save
         end
 
         @email = Email.new(email_params)
         @email.user = current_user
-        @email.message_thread = @message_thread
+        @email.message_thread_id = @message_thread_id
         @email.save
-        
+
         if @email.valid? == false
           raise ActiveRecord::Rollback
         end
