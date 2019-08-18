@@ -1,0 +1,26 @@
+<p>Show Message Thread</p>
+<p id="notice"><%= notice %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Subject</th>
+      <th>Body</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @emails.reverse.each do |email| %>
+      <tr>
+        <td><%= email.subject %></td>
+        <td><%= email.body %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= will_paginate @emails %>
+<br>
+
+<%= link_to 'Reply', new_email_reply_path(@emails.first) %>
