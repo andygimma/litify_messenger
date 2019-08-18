@@ -15,9 +15,9 @@
   <tbody>
     <% @threads.each do |thread| %>
       <tr>
-        <td><%= thread.emails.first.subject %></td>
-        <td><%= thread.emails.first.body %></td>
-        <td><%= link_to 'Show', thread %></td>
+        <td><%= thread.email.subject %></td>
+        <td><%= thread.email.body %></td>
+        <td><%= link_to 'Show', message_thread_path(thread.message_thread_id) %></td>
       </tr>
     <% end %>
   </tbody>
