@@ -71,16 +71,14 @@ class EmailsController < ApplicationController
           @message_thread_id = @message_thread.id
         end
 
-        user_ids.each do |user_id|
-          @message_thread_user = MessageThreadUser.new(user_id: user_id, message_thread_id: @message_thread_id)
-          @message_thread_user.save
-        end
-
         @email = Email.new(email_params)
         @email.user = current_user
         @email.message_thread_id = @message_thread_id
         @email.save
-
+        user_ids.each do |user_id|
+          @message_thread_user = MessageThreadUser.new(user_id: user_id, message_thread_id: @message_thread_id, email_id: @email.id)
+          @message_thread_user.save
+        end
         if @email.valid? == false
           raise ActiveRecord::Rollback
         end

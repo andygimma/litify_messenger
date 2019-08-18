@@ -11,16 +11,16 @@
   </thead>
 
   <tbody>
-    <% @emails.reverse.each do |email| %>
+    <% @message_threads.reverse.each do |message_thread| %>
       <tr>
-        <td><%= email.subject %></td>
-        <td><%= email.body %></td>
+        <td><%= message_thread.email.subject %></td>
+        <td><%= message_thread.email.body %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <br>
-<%= will_paginate @emails %>
+<%= will_paginate @message_threads %>
 <br>
 
-<%= link_to 'Reply', new_email_reply_path(@emails.first) %>
+<%= link_to 'Reply', new_email_reply_path(@message_threads.first.email) %>

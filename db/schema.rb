@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_18_131637) do
+ActiveRecord::Schema.define(version: 2019_08_18_181552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 2019_08_18_131637) do
   create_table "message_thread_users", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "message_thread_id"
+    t.bigint "email_id"
+    t.index ["email_id"], name: "index_message_thread_users_on_email_id"
     t.index ["message_thread_id"], name: "index_message_thread_users_on_message_thread_id"
     t.index ["user_id"], name: "index_message_thread_users_on_user_id"
   end
@@ -51,6 +53,7 @@ ActiveRecord::Schema.define(version: 2019_08_18_131637) do
 
   add_foreign_key "emails", "message_threads"
   add_foreign_key "emails", "users"
+  add_foreign_key "message_thread_users", "emails"
   add_foreign_key "message_thread_users", "message_threads"
   add_foreign_key "message_thread_users", "users"
   add_foreign_key "message_threads", "users"
