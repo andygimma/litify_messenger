@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
 
   def home
     @threads = MessageThreadUser
-                .user_dashboard_list(current_user)
+                .user_dashboard_list(current_user, 'email')
                 .paginate(page: params[:page], per_page: 10)
   end
 end

@@ -98,7 +98,13 @@ class EmailsController < ApplicationController
       user_ids = user_ids_from_params(params, current_user)
       ActiveRecord::Base.transaction do
         user_ids.each do |user_id|
-          @message_thread_user = MessageThreadUser.new(user_id: user_id, message_thread_id: message_thread_id, email_id: email_id)
+          @message_thread_user = MessageThreadUser.new(
+                                  user_id: user_id,
+                                  message_thread_id: message_thread_id,
+                                  email_id: email_id,
+                                  message_type: 'email',
+                                  message_id: email_id
+                                )
           @message_thread_user.save
         end
       end
