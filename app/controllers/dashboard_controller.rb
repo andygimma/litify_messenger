@@ -9,4 +9,7 @@ class DashboardController < ApplicationController
               .order(created_at: :desc)
               .paginate(page: params[:page], per_page: 10)
   end
+
+  def chat
+  end
 end
