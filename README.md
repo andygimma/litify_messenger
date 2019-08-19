@@ -11,3 +11,5 @@ To run this app, do the following.
 4. Navigate to http://localhost:3000
 5. Login with any of the users from seeds.rb. For example, you can use 'first@litify.com' as the email, and 'litify' as the password.
 
+Note: Bootstrap sidebar designed adapted from this repo: https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/index.html
+
