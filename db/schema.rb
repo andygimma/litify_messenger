@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_18_181552) do
+ActiveRecord::Schema.define(version: 2019_08_19_103356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(version: 2019_08_18_181552) do
     t.bigint "user_id"
     t.bigint "message_thread_id"
     t.bigint "email_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email_id"], name: "index_message_thread_users_on_email_id"
     t.index ["message_thread_id"], name: "index_message_thread_users_on_message_thread_id"
     t.index ["user_id"], name: "index_message_thread_users_on_user_id"
@@ -37,6 +39,8 @@ ActiveRecord::Schema.define(version: 2019_08_18_181552) do
 
   create_table "message_threads", force: :cascade do |t|
     t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_message_threads_on_user_id"
   end
 
