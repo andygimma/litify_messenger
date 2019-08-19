@@ -12,5 +12,11 @@ class DashboardController < ApplicationController
   end
 
   def chat
+    @chats = Chat.where(id: MessageThreadUser
+      .user_dashboard_list(current_user, 'chat')
+      .pluck(:message_id)
+    )
+    .order(created_at: :desc)
+    .paginate(page: params[:page], per_page: 10)
   end
 end

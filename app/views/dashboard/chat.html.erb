@@ -1,2 +1,28 @@
 <p>Chats</p>
+
+<h1>Emails</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>Body</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @chats.each do |chat| %>
+      <tr>
+        <td><%= chat.user.email %></td>
+        <td><%= chat.body %></td>
+        <td><%= link_to 'Show', message_thread_path(chat.message_thread_id) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= will_paginate @chats %>
+<br>
+
 <%= link_to 'New Chat', new_chat_path %>
