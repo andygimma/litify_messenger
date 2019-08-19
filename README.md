@@ -1,10 +1,12 @@
 # Litify Messenger
 
-This is an example repository for working with rails and postgres, and setting them up using docker-compose.
+Litify's latest project!
 
-To run this app, do the following. 
+Messenger is a communications and data stream that can easily be extended to suit any communications needs. Make sure to check out the Highlights section below for a little more information.
 
-1. Install docker
+## Installation
+
+1. Install docker and docker-compose
 2. Run `docker-compose up -d && docker attach $(docker-compose ps -q web)`
 3. This would run the web service in a container and postgres in a container and allows us to use binding.pry.
 4. Run `bundle exec rake db:seed` to seed the database.
@@ -13,11 +15,15 @@ To run this app, do the following.
 
 ## Highlights
 
-1. The use of MessageThread, MessageThreadUser, and MessageHelpers allows us to easily add new types of communications/data streams with minimal code. 
+1. The use of MessageThread, MessageThreadUser, and MessageHelpers allows us to easily add new types of communications/data streams with minimal code. The entire project was built around this idea, to hopefully stand out during the application process.
 2. We used database/model scopes appropriately to make our code more readable.
 3. Readability in general was a goal (though with a bit more time it could be made more readable).
 
-## Notes
+## Next steps
+
+1. Had I a bit more time, I would have used a message broker and websockets to make this all update live.
+2. I also would have added paperclip to emails
+## Final Notes
 
 Looking forward to walking you through the codebase!
 
