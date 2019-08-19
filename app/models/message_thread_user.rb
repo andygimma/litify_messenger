@@ -7,7 +7,7 @@ class MessageThreadUser < ApplicationRecord
   validates_presence_of :message_thread_id
   validates_presence_of :email_id
 
-  scope :my_dashboard_list, ->(user) { 
+  scope :user_dashboard_list, ->(user) { 
     where(user_id: user.id)
     .order('message_thread_users.message_thread_id, created_at DESC')
     .select('DISTINCT ON ("message_thread_id") *')
