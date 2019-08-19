@@ -11,6 +11,6 @@ class MessageThreadUser < ApplicationRecord
     where(user_id: user.id)
     .order('message_thread_users.message_thread_id, created_at DESC')
     .select('DISTINCT ON ("message_thread_id") *')
+    .reverse_order
   }
-
 end
