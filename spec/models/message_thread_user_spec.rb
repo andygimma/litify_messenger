@@ -30,7 +30,7 @@ RSpec.describe MessageThreadUser, type: :model do
       mtu_1 = FactoryBot.create(:message_thread_user, user_id: user.id, message_thread_id: message_thread.id)
       mtu_2 = FactoryBot.create(:message_thread_user, user_id: user.id, message_thread_id: message_thread.id)
       
-      expect(MessageThreadUser.user_dashboard_list(user)).to eq([mtu_1])
+      expect(MessageThreadUser.user_dashboard_list(user)).to eq([mtu_2])
     end
   end
 end

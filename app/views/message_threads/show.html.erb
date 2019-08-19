@@ -4,6 +4,7 @@
 <table>
   <thead>
     <tr>
+      <th>From</th>
       <th>Subject</th>
       <th>Body</th>
       <th colspan="3"></th>
@@ -13,6 +14,7 @@
   <tbody>
     <% @message_threads.reverse.each do |message_thread| %>
       <tr>
+        <td><%= message_thread.email.user.email %></td>
         <td><%= message_thread.email.subject %></td>
         <td><%= message_thread.email.body %></td>
       </tr>

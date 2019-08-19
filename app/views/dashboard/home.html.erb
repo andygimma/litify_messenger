@@ -6,6 +6,7 @@
 <table>
   <thead>
     <tr>
+      <th>From</th>
       <th>Subject</th>
       <th>Body</th>
       <th colspan="3"></th>
@@ -15,6 +16,7 @@
   <tbody>
     <% @threads.each do |thread| %>
       <tr>
+        <td><%= thread.email.user.email %></td>
         <td><%= thread.email.subject %></td>
         <td><%= thread.email.body %></td>
         <td><%= link_to 'Show', message_thread_path(thread.message_thread_id) %></td>
