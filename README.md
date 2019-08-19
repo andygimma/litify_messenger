@@ -23,6 +23,8 @@ Messenger is a communications and data stream that can easily be extended to sui
 
 1. Had I a bit more time, I would have used a message broker and websockets to make this all update live.
 2. I also would have added paperclip to emails
+3. More focus on security and testing.
+
 ## Final Notes
 
 Looking forward to walking you through the codebase!
