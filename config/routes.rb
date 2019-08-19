@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   get '/chat', to: 'dashboard#chat', as: 'dashboard_chat'
   resources :emails, only: [:show, :new, :create]
   resources :message_threads, only: [:show]
+  resources :chats, only: [:new, :create]
+
   get '/emails/new_reply/:id', to: 'emails#new_reply', as: 'new_email_reply'
 end

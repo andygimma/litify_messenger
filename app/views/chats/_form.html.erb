@@ -1,0 +1,30 @@
+<%= form_with(model: chat, local: true) do |form| %>
+  <% if chat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(chat.errors.count, "error") %> prohibited this chat from being saved:</h2>
+
+      <ul>
+      <% chat.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label "Send to:" %>
+    <%= form.select(:users, @users.collect {|p| [ p.email, p.id ] }, 
+                                           { prompt: "Please select", selected: @sent_users}, 
+                                           { :multiple => true }) %>
+    </div>
+  
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+  </div>
+
+  <%= hidden_field_tag :"chat[message_thread_id]", @message_thread_id %>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
