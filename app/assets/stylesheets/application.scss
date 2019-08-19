@@ -14,3 +14,20 @@
  *= require_self
  */
 @import "bootstrap";
+.full-height-and-width {
+  min-width: 1024px;
+}
+
+.navbar {
+  min-width: 1024px;
+}
+
+#sidebar-wrapper {
+  min-height: 640px;
+}
+
+.sidebar-heading {
+  min-height: 35px;
+  margin-top: 10px;
+  
+}

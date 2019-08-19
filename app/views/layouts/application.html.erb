@@ -10,18 +10,44 @@
   </head>
 
   <body>
-    <% if signed_in? %>
-      Signed in as: <%= current_user.email %>
-      <%= button_to 'Sign out', sign_out_path, method: :delete %>
-    <% else %>
-      <%= link_to 'Sign in', sign_in_path %>
-    <% end %>
+    <div class="d-flex full-height-and-width" id="wrapper">
 
-    <div id="flash">
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Litify Messenger </div>
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action bg-light">Email</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Chat</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <% if signed_in? %>
+          Signed in as: <%= current_user.email %>
+          <%= button_to 'Sign out', sign_out_path, method: :delete %>
+        <% else %>
+          <%= button_to 'Sign in', sign_in_path %>
+        <% end %>
+      </nav>
+
+      <div class="container-fluid">
+
+      <div id="flash">
       <% flash.each do |key, value| %>
         <div class="flash <%= key %>"><%= value %></div>
       <% end %>
     </div>
     <%= yield %>
+
+
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
   </body>
 </html>
