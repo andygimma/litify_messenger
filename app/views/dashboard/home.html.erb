@@ -16,7 +16,7 @@
         <td><%= email.user.email %></td>
         <td><%= email.subject %></td>
         <td><%= email.body %></td>
-        <td><%= link_to 'Show', message_thread_path(email.message_thread_id) %></td>
+        <td><%= link_to 'Show', show_email_thread_path(email.message_thread_id) %></td>
       </tr>
     <% end %>
   </tbody>

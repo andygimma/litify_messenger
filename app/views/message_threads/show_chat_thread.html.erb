@@ -1,7 +1,4 @@
-<p>Chats</p>
-
-<h1>Emails</h1>
-
+<p>Show chat thread</p>
 <table>
   <thead>
     <tr>
@@ -16,7 +13,6 @@
       <tr>
         <td><%= chat.user.email %></td>
         <td><%= chat.body %></td>
-        <td><%= link_to 'Show', show_chat_thread_path(chat.message_thread_id) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -25,4 +21,4 @@
 <%= will_paginate @chats %>
 <br>
 
-<%= link_to 'New Chat', new_chat_path %>
+<%= link_to 'Reply', new_chat_reply_path(@chats.first) %>

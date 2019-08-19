@@ -28,7 +28,7 @@ class EmailsController < ApplicationController
   def create
     respond_to do |format|
       if create_message(email_params, current_user, params, 'email')
-        format.html { redirect_to @email.message_thread, notice: 'Email was successfully created.' }
+        format.html { redirect_to show_email_thread_path(@email.message_thread), notice: 'Email was successfully created.' }
         format.json { render :show, status: :created, location: @email }
       else
         @users = User.all_except(current_user).select(:id, :email)

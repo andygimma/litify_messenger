@@ -9,7 +9,7 @@ class ChatsController < ApplicationController
   def create
     respond_to do |format|
       if create_message(chat_params, current_user, params, 'chat')
-        format.html { redirect_to @chat.message_thread, notice: 'Chat was successfully created.' }
+        format.html { redirect_to show_chat_thread_path(@chat.message_thread), notice: 'Chat was successfully created.' }
         format.json { render :show, status: :created, location: @chat }
       else
         @users = User.all_except(current_user).select(:id, :email)
@@ -17,6 +17,13 @@ class ChatsController < ApplicationController
         format.json { render json: @chat.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def new_reply
+    @message_thread_id = Chat.find(params[:id]).message_thread_id
+    @chat = Chat.new
+    @sent_users = MessageThreadUser.where(message_thread_id: @message_thread_id).pluck(:user_id)
+    @users = User.all_except(current_user).select(:id, :email)
   end
 
   private
