@@ -1,4 +1,5 @@
 class EmailsController < ApplicationController
+  include MessageHelpers
   before_action :require_login
   # before_action :require_reply_permission, only: [:new_reply]
 
@@ -26,7 +27,7 @@ class EmailsController < ApplicationController
   # POST /emails.json
   def create
     respond_to do |format|
-      if create_thread_and_email(email_params, current_user, params)
+      if create_message(email_params, current_user, params, 'email')
         format.html { redirect_to @email.message_thread, notice: 'Email was successfully created.' }
         format.json { render :show, status: :created, location: @email }
       else
@@ -42,46 +43,16 @@ class EmailsController < ApplicationController
       params.require(:email).permit(:subject, :body)
     end
 
-    def user_ids_from_params(params, current_user)
-      params["email"]["users"].push(current_user.id.to_s)
-      params["email"]["users"].reject { |u| u.empty? }
-    end
-
-    # def require_reply_permission
-    #   user_id = current_user.id
-    #   message_thread_id = Email.find(params[:id]).message_thread_id
-    #   MessageThreadUser
-    #     .where(
-    #       user_id: user_id,
-    #       message_thread_id: message_thread_id)
-    #     .count > 0
-    # end
-
-    def create_thread_and_email(email_params, current_user, params)
+    def create_message(email_params, current_user, params, message_type)
       ActiveRecord::Base.transaction do
         message_thread_id = get_or_create_message_thread(params, current_user)
-        @email = create_email(email_params, current_user)
-        create_message_thread_users(params, current_user, message_thread_id, @email.id)
-        if @email.valid? == false
+        @message = create_email(email_params, current_user)
+        create_message_thread_users(params, current_user, message_thread_id, @email.id, message_type)
+        if @message.valid? == false
           raise ActiveRecord::Rollback
         end
       end
-      @email.valid?
-    end
-
-    def get_or_create_message_thread(params, current_user)
-      ActiveRecord::Base.transaction do
-        @message_thread_id = nil
-        if params["email"]["message_thread_id"] != ""
-          @message_thread_id = params["email"]["message_thread_id"].to_i
-        else
-          @message_thread = MessageThread.new
-          @message_thread.user = current_user
-          @message_thread.save
-          @message_thread_id = @message_thread.id
-        end
-        @message_thread_id
-      end
+      @message.valid?
     end
 
     def create_email(email_params, current_user)
@@ -91,21 +62,6 @@ class EmailsController < ApplicationController
         @email.message_thread_id = @message_thread_id
         @email.save
         @email
-      end
-    end
-
-    def create_message_thread_users(params, current_user, message_thread_id, email_id)
-      user_ids = user_ids_from_params(params, current_user)
-      ActiveRecord::Base.transaction do
-        user_ids.each do |user_id|
-          @message_thread_user = MessageThreadUser.new(
-                                  user_id: user_id,
-                                  message_thread_id: message_thread_id,
-                                  message_type: 'email',
-                                  message_id: email_id
-                                )
-          @message_thread_user.save
-        end
       end
     end
 end

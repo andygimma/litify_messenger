@@ -1,4 +1,5 @@
 class DashboardController < ApplicationController
+  include MessageHelpers
   before_action :require_login
 
   def home
