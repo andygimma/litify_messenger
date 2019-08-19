@@ -45,9 +45,9 @@ class EmailsController < ApplicationController
 
     def create_message(email_params, current_user, params, message_type)
       ActiveRecord::Base.transaction do
-        message_thread_id = get_or_create_message_thread(params, current_user)
+        message_thread_id = get_or_create_message_thread(params["email"]["message_thread_id"], current_user)
         @message = create_email(email_params, current_user)
-        create_message_thread_users(params, current_user, message_thread_id, @email.id, message_type)
+        create_message_thread_users(params, current_user, message_thread_id, @message.id, message_type)
         if @message.valid? == false
           raise ActiveRecord::Rollback
         end
