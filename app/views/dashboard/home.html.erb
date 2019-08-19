@@ -14,18 +14,18 @@
   </thead>
 
   <tbody>
-    <% @threads.each do |thread| %>
+    <% @emails.each do |email| %>
       <tr>
-        <td><%= thread.email.user.email %></td>
-        <td><%= thread.email.subject %></td>
-        <td><%= thread.email.body %></td>
-        <td><%= link_to 'Show', message_thread_path(thread.message_thread_id) %></td>
+        <td><%= email.user.email %></td>
+        <td><%= email.subject %></td>
+        <td><%= email.body %></td>
+        <td><%= link_to 'Show', message_thread_path(email.message_thread_id) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <br>
-<%= will_paginate @threads %>
+<%= will_paginate @emails %>
 <br>
 
 <%= link_to 'New Email', new_email_path %>

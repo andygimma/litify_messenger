@@ -101,7 +101,6 @@ class EmailsController < ApplicationController
           @message_thread_user = MessageThreadUser.new(
                                   user_id: user_id,
                                   message_thread_id: message_thread_id,
-                                  email_id: email_id,
                                   message_type: 'email',
                                   message_id: email_id
                                 )
